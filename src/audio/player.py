@@ -2,7 +2,8 @@
 
 import platform
 from typing import Optional, Dict, Any, Union, cast, TypedDict
-
+import numpy as np
+from scipy import signal
 import sounddevice as sd
 import soundfile as sf
 from loguru import logger
@@ -15,6 +16,9 @@ class DeviceInfo(TypedDict, total=False):
 
 class AudioPlayer:
     """Audio playback handler."""
+    
+    # Common sample rates supported by most devices
+    SUPPORTED_RATES = [44100, 48000, 22050, 16000]
     
     def __init__(self):
         """Initialize the audio player."""
@@ -38,10 +42,15 @@ class AudioPlayer:
                 if device_info is not None:
                     logger.info(f"Using audio device: {device_info.get('name', 'Unknown')}")
                     
+                    # Get supported sample rate
+                    default_rate = device_info.get('default_samplerate', 44100)
+                    sample_rate = self._get_supported_rate(default_rate)
+                    logger.info(f"Using sample rate: {sample_rate} Hz")
+                    
                     # Configure device with safe defaults
                     # Note: Ignoring type errors here as sounddevice's types are incomplete
                     sd.default.device = (None, device_id)  # type: ignore
-                    sd.default.samplerate = int(device_info.get('default_samplerate', 44100))  # type: ignore
+                    sd.default.samplerate = sample_rate  # type: ignore
                     sd.default.channels = (None, 1)  # type: ignore
                 else:
                     logger.warning(f"Device {device_id} not found")
@@ -51,6 +60,25 @@ class AudioPlayer:
         except sd.PortAudioError as e:
             logger.error(f"Failed to configure audio device: {e}")
             raise
+            
+    def _get_supported_rate(self, preferred_rate: float) -> int:
+        """Get the closest supported sample rate.
+        
+        Args:
+            preferred_rate: Preferred sample rate
+            
+        Returns:
+            Closest supported sample rate
+        """
+        # Round to nearest integer
+        target = int(round(preferred_rate))
+        
+        # If the preferred rate is supported, use it
+        if target in self.SUPPORTED_RATES:
+            return target
+            
+        # Find the closest supported rate
+        return min(self.SUPPORTED_RATES, key=lambda x: abs(x - target))
             
     def _get_default_device(self) -> Optional[int]:
         """Get the system default output device.
@@ -88,14 +116,24 @@ class AudioPlayer:
         """
         try:
             # Load the audio file
-            data, samplerate = sf.read(file_path)
+            data, src_rate = sf.read(file_path)
             
             # Ensure audio data is float32 in range [-1, 1]
             if data.dtype != 'float32':
                 data = data.astype('float32')
             
+            # Get the device's sample rate
+            device_rate = int(sd.default.samplerate)  # type: ignore
+            
+            # Resample if necessary
+            if src_rate != device_rate:
+                logger.debug(f"Resampling from {src_rate}Hz to {device_rate}Hz")
+                samples = len(data)
+                new_samples = int(samples * device_rate / src_rate)
+                data = signal.resample(data, new_samples)
+            
             # Play the audio
-            sd.play(data, samplerate)
+            sd.play(data, device_rate)
             sd.wait()  # Wait until file is done playing
             return True
             
