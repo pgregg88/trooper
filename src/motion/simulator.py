@@ -95,4 +95,4 @@ def main():
     simulator.simulate_sequence(sequence)
 
 if __name__ == "__main__":
-    main() 
+    main()
