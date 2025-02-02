@@ -1,0 +1,20 @@
+# Core Libraries
+gitpython
+
+# AWS & OpenAI APIs
+boto3
+openai
+
+# Audio Processing
+pyaudio
+speechrecognition
+gtts
+pydub
+sox  # Keep this; it's a Python wrapper for SoX
+
+# Servo & I2C Control
+adafruit-circuitpython-pca9685
+adafruit-circuitpython-motor
+
+# Utility Libraries
+numpy
