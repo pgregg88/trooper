@@ -1,5 +1,12 @@
-"""Motion detection and handling."""
+"""Motion detection and response package."""
 
-from .pir_handler import PIRHandler
+from .types import MotionDirection
+from .handler import MotionHandler
+from .strategy import ResponseStrategy, ResponseParams
 
-__all__ = ['PIRHandler'] 
+__all__ = [
+    'MotionDirection',
+    'MotionHandler',
+    'ResponseStrategy',
+    'ResponseParams'
+] 

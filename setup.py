@@ -1,4 +1,4 @@
-"""Package setup for Stormtrooper Voice Assistant."""
+"""Setup file for Stormtrooper Voice Assistant."""
 
 from setuptools import setup, find_packages
 
@@ -7,17 +7,14 @@ setup(
     version="0.1.0",
     packages=find_packages(),
     install_requires=[
-        "click>=8.0.0",
-        "boto3>=1.26.0",
-        "python-dotenv>=0.19.0",
-        "loguru>=0.7.0",
-        "pydub>=0.25.1",
-        "sounddevice>=0.4.6",
-        "soundfile>=0.12.1",
+        "numpy",
+        "scipy",
+        "soundfile",
+        "loguru",
+        "pyyaml"
     ],
-    entry_points={
-        "console_scripts": [
-            "trooper=cli:main",
-        ],
-    },
-) 
+    python_requires=">=3.8",
+    description="Stormtrooper Voice Assistant with motion detection and audio effects",
+    author="Your Name",
+    author_email="your.email@example.com",
+)

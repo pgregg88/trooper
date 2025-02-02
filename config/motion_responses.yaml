@@ -1,0 +1,65 @@
+# Motion response configuration
+
+# Response rules for different motion directions
+directions:
+  left:
+    categories: ["spotted", "squad_commands"]
+    contexts: ["patrol", "combat"]
+    tags: ["alert", "directional"]
+    urgency_levels: ["medium", "high"]
+    weights:
+      urgency:
+        medium: 0.4
+        high: 0.6
+  
+  right:
+    categories: ["spotted", "squad_commands"]
+    contexts: ["patrol", "combat"]
+    tags: ["alert", "directional"]
+    urgency_levels: ["medium", "high"]
+    weights:
+      urgency:
+        medium: 0.4
+        high: 0.6
+  
+  center:
+    categories: ["spotted", "taunt"]
+    contexts: ["patrol", "combat"]
+    tags: ["alert", "command"]
+    urgency_levels: ["high"]
+    weights:
+      categories:
+        spotted: 0.7
+        taunt: 0.3
+  
+  unknown:
+    categories: ["spotted"]
+    contexts: ["patrol"]
+    tags: ["alert"]
+    urgency_levels: ["low", "medium"]
+    weights:
+      urgency:
+        low: 0.6
+        medium: 0.4
+
+# Global weights and settings
+settings:
+  max_recent_quotes: 10
+  min_repeat_interval_seconds: 30
+  default_weights:
+    categories:
+      spotted: 0.6
+      squad_commands: 0.3
+      taunt: 0.1
+    contexts:
+      patrol: 0.7
+      combat: 0.3
+    tags:
+      alert: 0.4
+      directional: 0.3
+      command: 0.2
+      combat: 0.1
+    urgency:
+      low: 0.2
+      medium: 0.5
+      high: 0.3 

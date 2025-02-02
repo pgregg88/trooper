@@ -1,0 +1,41 @@
+[tool.pylint.messages_control]
+disable = [
+    "unused-import",
+    "broad-exception-caught",
+    "wrong-import-position",
+    "trailing-whitespace",
+    "line-too-long",
+    "missing-final-newline",
+    "import-error",  # Handles import resolution issues
+]
+
+[tool.pylint.format]
+max-line-length = 100
+
+[tool.pylint.basic]
+good-names = ["e", "f", "i", "j", "k", "n", "x", "y", "z", "fp", "id", "_"]
+
+[tool.pylint.design]
+max-args = 10
+max-attributes = 10
+max-bool-expr = 5
+max-branches = 15
+max-locals = 20
+max-parents = 7
+max-public-methods = 20
+max-returns = 6
+max-statements = 50
+min-public-methods = 1
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trooper"
+version = "0.1.0"
+description = "Stormtrooper voice effect processor"
+requires-python = ">=3.8"
+authors = [
+    {name = "Your Name"}
+] 

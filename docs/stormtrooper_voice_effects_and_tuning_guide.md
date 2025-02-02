@@ -1,4 +1,5 @@
 # **🎧 Stormtrooper Voice Effects & Tuning Guide**
+
 📅 **Version:** 1.1  
 👤 **Author:** [Your Name]  
 📍 **Last Updated:** [Current Date]  
@@ -6,6 +7,7 @@
 ---
 
 ## **🎯 Overview**
+
 This guide details the implementation of authentic Stormtrooper voice effects using Amazon Polly and real-time audio processing. It covers both cached responses and live audio processing for dynamic interactions.
 
 ---
@@ -13,6 +15,7 @@ This guide details the implementation of authentic Stormtrooper voice effects us
 ## **1️⃣ Voice Effect Components**
 
 ### **1.1 Core Voice Characteristics**
+
 - Radio static & compression
 - Metallic, helmet-like resonance
 - Mid-frequency emphasis (300-3000 Hz)
@@ -20,6 +23,7 @@ This guide details the implementation of authentic Stormtrooper voice effects us
 - Short echo/reverb for helmet acoustics
 
 ### **1.2 Audio Processing Chain**
+
 1. Voice Generation/Input
 2. Frequency Filtering
 3. Distortion Effects
@@ -99,6 +103,7 @@ class PollyVoiceGenerator:
 ## **4️⃣ Audio Calibration**
 
 ### **4.1 Effect Parameters**
+
 | Parameter | Range | Default | Description |
 |-----------|--------|---------|-------------|
 | Bandpass Low | 300-500 Hz | 300 Hz | Lower frequency cutoff |
@@ -108,11 +113,15 @@ class PollyVoiceGenerator:
 | Echo Level | 0.3-0.5 | 0.4 | Echo intensity |
 
 ### **4.2 Calibration Procedure**
-1. Run calibration script:
+
 ```bash
 python3 src/audio/calibrate.py
 ```
+
+1. Run calibration script:
+
 2. Test each effect parameter
+
 3. Save optimal settings to config
 
 ---
@@ -120,11 +129,13 @@ python3 src/audio/calibrate.py
 ## **5️⃣ Performance Optimization**
 
 ### **5.1 Real-time Processing**
+
 - Buffer size: 1024 samples
 - Processing blocks: 20ms
 - Maximum latency: 50ms
 
 ### **5.2 Cache Management**
+
 - Cache format: 16-bit WAV
 - Cache location: assets/audio/cache
 - Cache naming: MD5 hash of text + parameters
@@ -134,6 +145,7 @@ python3 src/audio/calibrate.py
 ## **6️⃣ Testing & Verification**
 
 ### **6.1 Audio Quality Tests**
+
 ```python:tests/test_audio_quality.py
 def test_frequency_response():
     """Test frequency response of effect chain"""
@@ -144,6 +156,7 @@ def test_frequency_response():
 ```
 
 ### **6.2 Performance Tests**
+
 ```python:tests/test_performance.py
 def test_processing_latency():
     """Verify processing meets latency requirements"""
@@ -157,6 +170,7 @@ def test_processing_latency():
 ## **7️⃣ Troubleshooting**
 
 ### **Common Issues**
+
 1. **High Latency**
    - Reduce buffer size
    - Check system load
@@ -175,6 +189,7 @@ def test_processing_latency():
 ---
 
 ## **8️⃣ Future Improvements**
+
 - Real-time parameter adjustment
 - Dynamic effect intensity based on context
 - Additional radio effects (static bursts, clicks)

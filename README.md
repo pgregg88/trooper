@@ -21,13 +21,11 @@ A Raspberry Pi-powered Stormtrooper voice assistant that responds to motion with
 
 ## Installation
 
-1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/trooper.git
 cd trooper
 ```
 
-2. Create and activate a virtual environment:
 ```bash
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
@@ -35,19 +33,25 @@ source venv/bin/activate  # Linux/Mac
 .\venv\Scripts\activate  # Windows
 ```
 
+1. Clone the repository:
+
+2. Create and activate a virtual environment:
+
 3. Install dependencies:
+
+4. Configure AWS credentials:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Configure AWS credentials:
 ```bash
 aws configure --profile trooper
 ```
 
 ## Project Structure
 
-```
+```bash
 trooper/
 ├── src/
 │   ├── ai/
@@ -72,11 +76,13 @@ trooper/
 ## Usage
 
 1. Start the voice assistant:
+
+2. Available commands:
+
 ```bash
 python main.py
 ```
 
-2. Available commands:
 ```bash
 # Start motion detection
 python main.py start

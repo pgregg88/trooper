@@ -2,6 +2,7 @@
 gitpython>=3.1.40
 python-dotenv>=1.0.0
 loguru>=0.7.2
+pyyaml>=6.0.1
 
 # AWS & OpenAI APIs
 boto3>=1.26.0
@@ -12,10 +13,11 @@ pydub>=0.25.1
 sounddevice>=0.4.6
 soundfile>=0.12.1
 numpy>=1.24.0  # Required for audio processing
+scipy>=1.15.1  # Required for signal processing
 
 # Servo & I2C Control
-RPi.GPIO>=0.7.1
-smbus2>=0.4.2  # For I2C communication
+# RPi.GPIO>=0.7.1
+# smbus2>=0.4.2  # For I2C communication
 
 # Utilities
 click>=8.1.3
