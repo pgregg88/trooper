@@ -8,7 +8,7 @@ import time
 import yaml
 from loguru import logger
 
-from .types import MotionDirection
+from .constants import MotionDirection
 
 @dataclass
 class ResponseParams:

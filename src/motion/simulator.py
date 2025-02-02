@@ -12,7 +12,7 @@ project_root = Path(__file__).parent.parent.parent
 if str(project_root) not in sys.path:
     sys.path.append(str(project_root))
 
-from src.motion.types import MotionDirection
+from src.motion.constants import MotionDirection
 from src.motion.handler import MotionHandler
 
 class MotionSimulator:

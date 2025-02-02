@@ -1,6 +1,6 @@
 """Motion detection and response package."""
 
-from .types import MotionDirection
+from .constants import MotionDirection
 from .handler import MotionHandler
 from .strategy import ResponseStrategy, ResponseParams
 

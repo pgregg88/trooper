@@ -1,4 +1,4 @@
-"""Motion detection types and constants."""
+"""Motion detection constants."""
 
 from enum import Enum
 

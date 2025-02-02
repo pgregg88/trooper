@@ -9,7 +9,7 @@ from loguru import logger
 from src.quotes import QuoteManager, QuoteCategory, UrgencyLevel, Quote
 from src.audio import StormtrooperEffect, AudioPlayer
 from .strategy import ResponseStrategy
-from .types import MotionDirection
+from .constants import MotionDirection
 
 class MotionHandler:
     """Handler for motion detection and response."""
