@@ -1,0 +1,82 @@
+spotted:
+  - "Adversary inbound"
+  - "What are you doing here?"
+  - "Jedi!"
+  - "The Jedi is here!"
+  - "We've found the Jedi."
+  - "It's the Jedi! get him!"
+  - "Jedi - engage with caution!"
+  - "Someone ahead."
+  - "Hey an intruder!"
+  - "Got a hostile!"
+  - "What's over there?"
+  - "Found you, intruder."
+  - "Found the target!"
+  - "He's there! right there!"
+  - "Enemy located."
+  - "Break's over."
+  - "Adversary inbound"
+
+taunt:
+  - "Stand still!"
+  - "Surrender!"
+  - "Surrender now."
+  - "You can't beat us all."
+  - "You won't get away."
+  - "You're under arrest!"
+  - "We’ll get you for that!"
+  - "We’ll make you pay!"
+  - "You’re aren’t leaving here alive!"
+  - "You’ll pay for that!"
+  - "You're gonna regret being here!"
+  - "Get him! Make him pay!"
+  - "You should run from this squadron!"
+  - "Oh, you’re dead!"
+
+squad_commands:
+  - "Attack him! Quickly!"
+  - "Blast 'em!"
+  - "Destroy him."
+  - "Firing on the enemy."
+  - "Get the target!"
+  - "He's on the run!"
+  - "Hit him!"
+  - "Hurry! Catch him!"
+  - "Lay down suppressing fire!"
+  - "Move!"
+  - "Shoot him."
+  - "Shoot that Jedi!"
+  - "Steady! Concentrate fire!"
+  - "Step back, I've got this."
+
+random:
+  - "Boy, I could sure go for a death stick right now."
+  - "I'm sure glad I wasn't stationed here when Vader was alive. I heard he liked to use stormtroopers for lightsaber practice."
+  - "I've seen some impressive things as a Stormtrooper of the Empire. I've seen Star Destroyers tear apart a battlecruiser with just tractor beams. I've seen command ships so big they take three days to walk from end to end. I even saw Lord Vader once. But I think the greatest thing I ever saw was those squat little dropships, flying out of a binary sunset, loaded with reinforcements, ammunition, medical droids and food."
+
+conversation:
+  - "I could sure go for a cup of caf right now!"
+  - "I'm not sure I'm cut out for this whole stormtrooper thing."
+  - "I heard that Lord Vader might be making an appearance today!"
+  - "Have you heard about the new T-16's"
+  - Let’s calm it down here.
+  - "Watch that curiosity, citizen."
+  - "Have you sworn allegiance to the Empire?"
+  - "Take it easy, citizen."
+  - "Present your identity card for verification."
+  - "You look familiar. I’ve seen your face before."
+  - "We’ll consider that an oversight. You consider this, a warning."
+  - "We’ve got eyes on you."
+  - "This outpost is under observation by the Empire"
+  - "Hello citizen. I believe you were warned about coming back to this sector.. Am I right?"
+  - "Didn’t we warn you to stay away from this sector?  Well, you got our attention? Are you trying to get arrested?"
+  - "Stay sharp, this area is crawling with Rebels."
+  - "Don’t be alarmed. We are here for your protection."
+
+
+announcements:
+  - "Citizens!  We have been ordered to re-position, and are vacating these premises!"
+  - "Rebel activity has been reported in this area!  If you see anything, then report it immediately!"
+
+
+

@@ -1,0 +1,9 @@
+# Create project structure
+mkdir -p trooper/src/{audio,motion,movement,ai}
+mkdir -p trooper/config
+mkdir -p trooper/assets/{audio/{cache,responses},quotes}
+mkdir -p trooper/tests
+
+# Create initial __init__.py files
+touch trooper/src/{audio,motion,movement,ai}/__init__.py
+touch trooper/config/__init__.py 

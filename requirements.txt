@@ -1,20 +1,29 @@
 # Core Libraries
-gitpython
+gitpython>=3.1.40
+python-dotenv>=1.0.0
+loguru>=0.7.2
 
 # AWS & OpenAI APIs
-boto3
-openai
+boto3>=1.26.0
+botocore>=1.29.0
 
 # Audio Processing
-pyaudio
-speechrecognition
-gtts
-pydub
-sox  # Keep this; it's a Python wrapper for SoX
+pydub>=0.25.1
+sounddevice>=0.4.6
+soundfile>=0.12.1
+numpy>=1.24.0  # Required for audio processing
 
 # Servo & I2C Control
-adafruit-circuitpython-pca9685
-adafruit-circuitpython-motor
+RPi.GPIO>=0.7.1
+smbus2>=0.4.2  # For I2C communication
 
-# Utility Libraries
-numpy
+# Utilities
+click>=8.1.3
+pathlib>=1.0.1
+
+# Development
+pytest>=7.3.1
+black>=23.3.0
+flake8>=6.0.0
+mypy>=1.3.0
+pytest-cov>=4.1.0  # For test coverage reports
