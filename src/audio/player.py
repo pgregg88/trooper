@@ -22,11 +22,34 @@ class AudioPlayer:
     SUPPORTED_RATES = [44100, 48000, 22050, 16000]
     DEFAULT_RATE = 44100  # CD-quality audio
     
+    # Volume settings
+    MIN_VOLUME = 1
+    MAX_VOLUME = 11
+    DEFAULT_VOLUME = 5
+    
     def __init__(self):
         """Initialize the audio player."""
         self.system = platform.system()
+        self.volume = self.DEFAULT_VOLUME
         self._configure_device()
         logger.info(f"Initialized audio player on {self.system}")
+        
+    def set_volume(self, volume: float) -> None:
+        """Set playback volume level.
+        
+        Args:
+            volume: Volume level from 1 (quietest) to 11 (loudest)
+        """
+        self.volume = max(self.MIN_VOLUME, min(self.MAX_VOLUME, volume))
+        logger.info(f"Volume set to: {self.volume}")
+        
+    def get_volume(self) -> float:
+        """Get current volume level.
+        
+        Returns:
+            Current volume level (1-11)
+        """
+        return self.volume
         
     def _configure_device(self) -> None:
         """Configure audio device based on platform."""
@@ -113,11 +136,12 @@ class AudioPlayer:
             logger.error(f"Failed to get default device: {e}")
             return None
     
-    def play_file(self, file_path: str) -> bool:
+    def play_file(self, file_path: str, volume: Optional[float] = None) -> bool:
         """Play an audio file.
         
         Args:
             file_path: Path to the audio file to play
+            volume: Optional volume override (1-11)
             
         Returns:
             True if playback successful, False otherwise
@@ -139,6 +163,13 @@ class AudioPlayer:
                 samples = len(data)
                 new_samples = int(samples * device_rate / src_rate)
                 data = signal.resample(data, new_samples)
+            
+            # Apply volume scaling
+            current_volume = volume if volume is not None else self.volume
+            current_volume = max(self.MIN_VOLUME, min(self.MAX_VOLUME, current_volume))
+            # Convert 1-11 range to 0-1 range for audio scaling
+            volume_scale = (current_volume - 1) / (self.MAX_VOLUME - 1)
+            data *= volume_scale
             
             # Play the audio
             sd.play(data, device_rate)

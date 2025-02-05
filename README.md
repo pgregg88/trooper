@@ -1,116 +1,204 @@
-# Stormtrooper Voice Assistant
+# Trooper Voice Assistant
 
-A Raspberry Pi-powered Stormtrooper voice assistant that responds to motion with authentic Imperial responses.
+A command-line tool that converts text to speech with a Stormtrooper voice effect.
 
 ## Features
 
-- Motion detection using PIR sensors
-- Pan/tilt head movement with servo motors
-- Text-to-speech using AWS Polly
-- Stormtrooper voice effects processing
-- Configurable responses and behaviors
-
-## Requirements
-
-- Raspberry Pi (3 or newer recommended)
-- PIR motion sensor
-- 2x servo motors (pan/tilt)
-- Speaker/audio output
-- Python 3.8+
-- AWS account with Polly access
+- Text-to-speech using Amazon Polly
+- Stormtrooper voice effect processing
+- Volume control (1-11)
+- Multiple voice contexts (general, combat, alert, patrol)
+- Urgency levels (low, normal, high)
+- Audio file management
+- Command-line interface
 
 ## Installation
 
-```bash
-git clone https://github.com/yourusername/trooper.git
-cd trooper
-```
+### Prerequisites
 
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# or
-.\venv\Scripts\activate  # Windows
-```
+1. Python 3.8 or higher
+2. pip (Python package installer)
+3. Virtual environment tool (venv)
+4. AWS account with Polly access
 
-1. Clone the repository:
+### Step-by-Step Installation
 
-2. Create and activate a virtual environment:
+1. **Clone the Repository**
+   ```bash
+   git clone <repository-url>
+   cd trooper
+   ```
 
-3. Install dependencies:
+2. **Create and Activate Virtual Environment**
+   ```bash
+   # Create virtual environment
+   python -m venv .venv
 
-4. Configure AWS credentials:
+   # Activate it
+   # On macOS/Linux:
+   source .venv/bin/activate
+   # On Windows:
+   .venv\Scripts\activate
+   ```
 
-```bash
-pip install -r requirements.txt
-```
+3. **Install the Package**
+   ```bash
+   # Install in development mode
+   pip install -e .
+   ```
 
-```bash
-aws configure --profile trooper
-```
+4. **Configure AWS Credentials**
+   
+   The tool requires AWS credentials for Amazon Polly. You can configure these in several ways:
 
-## Project Structure
+   a. Using AWS CLI:
+   ```bash
+   aws configure
+   ```
 
-```bash
-trooper/
-├── src/
-│   ├── ai/
-│   │   ├── polly_client.py      # AWS Polly integration
-│   │   └── response_generator.py # Response generation
-│   ├── audio/
-│   │   ├── effects.py           # Audio effects processing
-│   │   └── player.py            # Audio playback
-│   ├── motion/
-│   │   └── pir_handler.py       # Motion detection
-│   └── movement/
-│       └── servo_controller.py   # Servo control
-├── config/
-│   ├── settings.py              # Global settings
-│   └── audio_effects.py         # Audio effects config
-├── assets/
-│   └── audio/                   # Audio file storage
-├── requirements.txt
-└── README.md
-```
+   b. Environment variables:
+   ```bash
+   export AWS_ACCESS_KEY_ID="your_access_key"
+   export AWS_SECRET_ACCESS_KEY="your_secret_key"
+   export AWS_DEFAULT_REGION="us-east-1"
+   ```
+
+   c. Credentials file:
+   ```ini
+   # ~/.aws/credentials
+   [default]
+   aws_access_key_id = your_access_key
+   aws_secret_access_key = your_secret_key
+   ```
+
+5. **Verify Installation**
+   ```bash
+   # Check if trooper command is available
+   which trooper  # Should point to .venv/bin/trooper
+
+   # Check help
+   trooper --help
+   ```
 
 ## Usage
 
-1. Start the voice assistant:
+### Basic Commands
 
-2. Available commands:
+1. **Basic Text-to-Speech**
+   ```bash
+   trooper say 'Stop right there!'
+   ```
 
+2. **Adjust Volume (1-11)**
+   ```bash
+   trooper say -v 11 'Intruder alert!'
+   ```
+
+3. **Set Urgency and Context**
+   ```bash
+   trooper say --volume 11 --urgency high --context combat 'Enemy spotted!'
+   ```
+
+4. **Generate Without Playing**
+   ```bash
+   trooper say --no-play --keep 'All clear'
+   ```
+
+### Command Options
+
+- `-v, --volume`: Set volume level (1-11, default: 5)
+- `-u, --urgency`: Set urgency level (low, normal, high)
+- `-c, --context`: Set voice context (general, combat, alert, patrol)
+- `--no-play`: Generate audio without playing
+- `--keep`: Keep generated audio files
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Command Not Found**
+   ```bash
+   # Solution: Make sure virtual environment is activated
+   source .venv/bin/activate  # macOS/Linux
+   .venv\Scripts\activate     # Windows
+   ```
+
+2. **Import Errors**
+   ```bash
+   # Solution: Reinstall the package
+   pip uninstall trooper
+   pip install -e .
+   ```
+
+3. **Audio Device Issues**
+   - Check if your system's audio device is working
+   - Try adjusting volume
+   - Check system audio settings
+   ```bash
+   # Test audio
+   trooper say --volume 5 'Test'
+   ```
+
+4. **AWS Credentials Issues**
+   - Verify AWS credentials are properly configured
+   - Check AWS IAM permissions for Polly
+   - Ensure correct region is set
+   ```bash
+   # Test AWS configuration
+   aws polly describe-voices
+   ```
+
+### Audio Quality Issues
+
+1. **Volume Too Low**
+   ```bash
+   # Increase volume (max 11)
+   trooper say -v 11 'Test volume'
+   ```
+
+2. **Audio Distortion**
+   ```bash
+   # Try lower volume
+   trooper say -v 5 'Test audio'
+   ```
+
+3. **Playback Issues**
+   ```bash
+   # Generate file without playing
+   trooper say --no-play --keep 'Test'
+   # Then play with system audio player
+   ```
+
+## Development
+
+### Running Tests
 ```bash
-python main.py
+# Install development dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest
 ```
 
+### Code Style
+The project uses:
+- Black for code formatting
+- Ruff for linting
+- MyPy for type checking
+
+### Building from Source
 ```bash
-# Start motion detection
-python main.py start
+# Install build dependencies
+pip install build
 
-# Test voice response
-python main.py speak "Move along, citizen."
-
-# Center head position
-python main.py center
-
-# Stop all services
-python main.py stop
+# Build package
+python -m build
 ```
-
-## Configuration
-
-- Edit `config/settings.py` to modify global settings
-- Edit `config/audio_effects.py` to adjust voice effects
-- Add custom responses in `src/ai/response_generator.py`
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+[Insert License Information]
+
+## Contributing
+
+[Insert Contributing Guidelines]
