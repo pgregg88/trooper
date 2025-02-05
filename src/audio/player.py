@@ -18,7 +18,9 @@ class AudioPlayer:
     """Audio playback handler."""
     
     # Common sample rates supported by most devices
+    # 44.1kHz is the preferred rate for best quality and compatibility
     SUPPORTED_RATES = [44100, 48000, 22050, 16000]
+    DEFAULT_RATE = 44100  # CD-quality audio
     
     def __init__(self):
         """Initialize the audio player."""
@@ -42,9 +44,9 @@ class AudioPlayer:
                 if device_info is not None:
                     logger.info(f"Using audio device: {device_info.get('name', 'Unknown')}")
                     
-                    # Get supported sample rate
-                    default_rate = device_info.get('default_samplerate', 44100)
-                    sample_rate = self._get_supported_rate(default_rate)
+                    # Try to use 44.1kHz first (CD quality), fallback to device default
+                    default_rate = device_info.get('default_samplerate', self.DEFAULT_RATE)
+                    sample_rate = self._get_supported_rate(self.DEFAULT_RATE)
                     logger.info(f"Using sample rate: {sample_rate} Hz")
                     
                     # Configure device with safe defaults
@@ -78,6 +80,12 @@ class AudioPlayer:
             return target
             
         # Find the closest supported rate
+        # Prefer rates that are multiples/factors of the target
+        for rate in self.SUPPORTED_RATES:
+            if rate % target == 0 or target % rate == 0:
+                return rate
+                
+        # Fallback to closest rate
         return min(self.SUPPORTED_RATES, key=lambda x: abs(x - target))
             
     def _get_default_device(self) -> Optional[int]:

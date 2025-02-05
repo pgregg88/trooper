@@ -109,6 +109,12 @@ categories:
         - text: "Oh, you're dead!"
           urgency: high
           tags: ["combat", "threat"]
+        - text: "The radar sir...it appears to be... jammed!,"
+          urgency: high
+          tags: ["combat", "threat"]
+
+
+          
 
   squad_commands:
     description: "Tactical and coordination quotes"

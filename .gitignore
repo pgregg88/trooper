@@ -171,3 +171,5 @@ cython_debug/
 .pypirc
 
 assets/audio/*
+
+.DS_Store

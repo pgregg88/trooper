@@ -3,6 +3,10 @@
 import sys
 from pathlib import Path
 from typing import Dict, List
+import numpy as np
+import numpy.typing as npt
+from scipy import signal
+import soundfile as sf
 from loguru import logger
 
 # Add project root to Python path
@@ -13,6 +17,35 @@ if str(project_root) not in sys.path:
 from src.quotes import QuoteManager, Quote
 from src.audio.polly import PollyClient
 from src.audio.utils import generate_filename
+
+def resample_to_44100(data: bytes, src_rate: int = 16000) -> npt.NDArray[np.float32]:
+    """Resample PCM audio data to 44.1kHz.
+    
+    Args:
+        data: Raw PCM audio data
+        src_rate: Source sample rate
+        
+    Returns:
+        Resampled audio data as float32 array normalized between -1 and 1
+    """
+    # Ensure data length is multiple of 2 (int16)
+    if len(data) % 2 != 0:
+        data = data[:-1]
+        logger.warning("Trimmed odd byte from PCM data")
+    
+    # Convert PCM bytes to float32 array
+    samples = np.frombuffer(data, dtype=np.int16)
+    audio = samples.astype(np.float32) / 32768.0
+    
+    # Calculate resampling parameters
+    src_samples = len(audio)
+    dst_rate = 44100
+    dst_samples = int(src_samples * float(dst_rate) / float(src_rate))
+    
+    # Resample audio
+    resampled = np.array(signal.resample(audio, dst_samples), dtype=np.float32)
+    
+    return resampled
 
 def generate_polly_files(quotes_file: Path, output_dir: Path) -> None:
     """Generate missing audio files using AWS Polly.
@@ -38,7 +71,7 @@ def generate_polly_files(quotes_file: Path, output_dir: Path) -> None:
     generated = 0
     skipped = 0
     
-    logger.info(f"Generating {total_quotes} audio files...")
+    logger.info(f"Generating {total_quotes} audio files at 44.1kHz...")
     
     for _, quotes in quote_groups.items():
         for i, quote in enumerate(quotes):
@@ -53,9 +86,20 @@ def generate_polly_files(quotes_file: Path, output_dir: Path) -> None:
                 continue
             
             try:
-                # Generate audio with Polly
+                # Generate audio with Polly at 16kHz
                 logger.info(f"Generating audio for: {quote.text}")
-                polly.generate_speech(quote.text, str(output_path))
+                pcm_data = polly.generate_speech(quote.text)
+                
+                # Ensure we got bytes and not a file path
+                if isinstance(pcm_data, str):
+                    logger.error(f"Unexpected string return from Polly for {filename}")
+                    continue
+                
+                # Resample to 44.1kHz
+                resampled_data = resample_to_44100(pcm_data)
+                
+                # Save as WAV
+                sf.write(str(output_path), resampled_data, 44100, format='WAV', subtype='PCM_16')
                 generated += 1
                 
             except Exception as e:
